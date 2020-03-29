@@ -6,7 +6,7 @@ CC=gcc
 #CFLAGS=-g -Wall -ansi -pedantic -DDEBUG
 CFLAGS=-O2 -ansi -Wall -pedantic
 #CFLAGS=-ansi -Wall -pedantic
-LDFLAGS=-lgsl -lgslcblas 
+LDFLAGS=-lgsl -lgslcblas -lm
 
 OBS=50
 #OBS=3
@@ -25,16 +25,16 @@ test: test-code
 	nice ./test-code
 
 test-code: test-code.o interval.o
-	gcc $(CFLAGS) $(LDFLAGS) -o test-code interval.o test-code.o
+	gcc $(CFLAGS) -o test-code interval.o test-code.o $(LDFLAGS)
 
 test-mcmc: test-mcmc.o interval.o
-	gcc $(CFLAGS) $(LDFLAGS) -o test-mcmc interval.o test-mcmc.o
+	gcc $(CFLAGS) -o test-mcmc interval.o test-mcmc.o $(LDFLAGS)
 
 lotka_volterra: lotka_volterra.o interval.o
-	gcc $(CFLAGS) $(LDFLAGS) -o lotka_volterra interval.o lotka_volterra.o
+	gcc $(CFLAGS) -o lotka_volterra interval.o lotka_volterra.o $(LDFLAGS)
 
 lotka_volterra-v4: lotka_volterra-v4.o interval.o
-	gcc $(CFLAGS) $(LDFLAGS) -o lotka_volterra-v4 interval.o lotka_volterra-v4.o
+	gcc $(CFLAGS) -o lotka_volterra-v4 interval.o lotka_volterra-v4.o $(LDFLAGS)
 
 clean:
 	rm -f *.tab *.sim *.ind *.o *.out *~ *.bak core test-code test-mcmc lotka_volterra
