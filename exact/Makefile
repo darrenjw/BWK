@@ -3,7 +3,7 @@
 CFLAGS=-g -O2 -Wall -ansi -pedantic
 #CFLAGS=-g -Wall -ansi -pedantic -DDEBUG
 #CFLAGS=-O2 -ansi
-LDFLAGS=-lgsl -lgslcblas 
+LDFLAGS=-lgsl -lgslcblas -lm
 
 OBS=50
 
@@ -16,7 +16,7 @@ lv-big.tab: lotka_volterra
 	nice ./lotka_volterra 500000 $(OBS) | mcmc.py -t 20 > lv-big.tab
 
 lotka_volterra: lotka_volterra.o interval.o
-	gcc $(CFLAGS) $(LDFLAGS) -o lotka_volterra interval.o lotka_volterra.o
+	gcc $(CFLAGS) -o lotka_volterra interval.o lotka_volterra.o $(LDFLAGS)
 
 clean:
 	rm -f *.tab *.sim *.ind *.o *.out *~ *.bak core interval_test lotka_volterra
