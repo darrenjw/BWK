@@ -8,6 +8,9 @@ Boys, R. J., Wilkinson, D. J., Kirkwood, T. B. L. (2008) Bayesian inference for 
 
 Initially just Wilkinson's C code for block updating MCMC algorithm.
 
-Hope to find Boys' Fortran code for RJ-MCMC algorithm at some point.
+Building this requires the [GSL](https://www.gnu.org/software/gsl/). On Debian-derived Linux distributions, this should just require the packages `gsl-bin` and `libgsl-dev`. There will be similar packages on other Linux and Unix-like systems. Then, just typing `make` in the relevant directory should build and run the code. See the `Makefile` for further details.
+
+
+I hope to find Boys' Fortran code for RJ-MCMC algorithm at some point.
 
 
