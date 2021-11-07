@@ -2,7 +2,7 @@
 
 a.out: prey.f
 	cd ../randlib.f/src ; make
-	f77 prey.f ../randlib.f/src/randlib.a
+	f77 -O2 prey.f ../randlib.f/src/randlib.a
 
 
 
