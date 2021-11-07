@@ -1,0 +1,7 @@
+#!/bin/sh
+# job_script inputfile
+
+PATH=$PATH:~/bin
+date
+./a.out < ${1}
+date

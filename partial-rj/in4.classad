@@ -1,0 +1,14 @@
+####################
+# Standard ClassAd
+####################
+
+Executable      = job_script
+Arguments       = in4
+Universe        = vanilla
+Requirements    = OpSys == "LINUX" && Arch =="X86_64"
+
+Error   = in4_condor.err
+Output  = in4_condor.out
+Log     = in4_condor.log
+
+Queue
