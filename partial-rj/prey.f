@@ -54,11 +54,11 @@ c  read data and initialise missing data
 c
       print *,'Enter seeds'
       read(5,*) seed1,seed2
-c     call setall(seed1,seed2)
+      call setall(seed1,seed2)
 c   repeatable seeds
 c      call g05cbf(seed1)
 c   non-repeatable seeds
-      call g05ccf
+c      call g05ccf
 c
       print *,'Enter burn-in, run length and nthin'
       read(5,*) nburn,nrun,nthin
@@ -1064,10 +1064,10 @@ c      end subroutine initconfig
       
       subroutine initialise(theta,npts,x,rtype,times,r,sumr,integral,
      &     lpopprod,sumint)
-      external pop_rate,genpoi
+      external pop_rate,ignpoi
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
-      integer x(2,0:nmax),r1,r2,r3,sumr(3),genpoi,rtype(nmax,rmax),num,
+      integer x(2,0:nmax),r1,r2,r3,sumr(3),ignpoi,rtype(nmax,rmax),num,
      &     i,j,k,nex,pop_rate,rtypes(rmax),ps(2,0:rmax),npts,r(3,nmax)
       double precision theta(3),times(nmax,rmax),incr,int(3),
      &     integral(3,nmax),lpopprod(nmax),rate,timess(rmax),sumint(3)
@@ -1080,7 +1080,7 @@ c      end subroutine initconfig
             rate=rate+theta(k)*(pop_rate(k,x(1,i-1),x(2,i-1))
      &           +pop_rate(k,x(1,i),x(2,i)))/2
          end do
-         nex=max0((genpoi(rate)-num)/3,0)
+         nex=max0((ignpoi(rate)-num)/3,0)
          incr=1d0/(num+3*nex+1)
          do j=1,num+3*nex
             times(i,j)=j*incr
@@ -1133,33 +1133,4 @@ c      end subroutine initconfig
          end do
       end do
       end subroutine initialise
-      
-      double precision function gengam(a,r)
-      double precision a,r,x(1)
-      integer ifail
-      ifail=0
-      call g05fff(r,1d0/a,1,x,ifail)
-      gengam=x(1)
-      end function gengam
-      
-      double precision function genunf(a,b)
-      external g05caf
-      double precision a,b,g05caf,dum
-      genunf=a+(b-a)*g05caf(dum)
-      end function genunf
-      
-      integer function ignuin(a,b)
-      external g05dyf
-      integer a,b,g05dyf
-      ignuin=g05dyf(a,b)
-      end function ignuin
-      
-      
-      integer function genpoi(a)
-      external g05drf
-      double precision a
-      integer g05drf,ifail
-      ifail=0
-      genpoi=g05drf(a,ifail)
-      end function genpoi
       
