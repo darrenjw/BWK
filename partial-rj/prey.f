@@ -4,7 +4,7 @@ c
 c Works on numbers of reactions - not triples!
 c
       program prey
-      external gengam
+      external gengamm
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer i,j,k,x(2,0:nmax),rtype(nmax,rmax),r(3,nmax),niter,nthin,
@@ -12,7 +12,7 @@ c
      &     countd,countm,countm22,counta2,counta22,countd2,countd22,
      &     cm2,ca,cd,cm,cm22,ca2,ca22,cd2,cd22,fixedpred,counta3,
      &     countd3,countm3,ca3,cd3,cm3
-      double precision times(nmax,rmax),ath(3),bth(3),gengam,
+      double precision times(nmax,rmax),ath(3),bth(3),gengamm,
      &     theta(3),int(3,nmax),lpopprod(nmax),sumint(3)
       character(len=50) fin,fout
       data counta,countd,countm,counta2,counta22,countd2,countd22,
@@ -65,7 +65,7 @@ c
       if (fixedpred.eq.1) then
          do niter=1,nburn
             do k=1,3
-               theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+               theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
             end do
             call allfixed(npts,theta,rtype,times,r,sumr,x,int,
      &           sumint,lpopprod,ca,cd,cm)
@@ -73,7 +73,7 @@ c
          do niter=1,nrun
             do j=1,nthin
                do k=1,3
-                  theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+                  theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
                end do
                call allfixed(npts,theta,rtype,times,r,sumr,x,int,
      &              sumint,lpopprod,counta,countd,countm)
@@ -92,7 +92,7 @@ c
       if (fixedpred.eq.2) then
          do niter=1,nburn
             do k=1,3
-               theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+               theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
             end do
             call fixedmidprey(npts,theta,rtype,times,r,sumr,x,int,
      &           sumint,lpopprod,ca2,cd2,cm2,ca22,cd22,cm22)
@@ -100,7 +100,7 @@ c
          do niter=1,nrun
             do j=1,nthin
                do k=1,3
-                  theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+                  theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
                end do
                call fixedmidprey(npts,theta,rtype,times,r,sumr,x,int,
      &              sumint,lpopprod,counta2,countd2,countm2,counta22,
@@ -120,7 +120,7 @@ c
       if (fixedpred.eq.3) then
          do niter=1,nburn
             do k=1,3
-               theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+               theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
             end do
             call fixedmidprey(npts,theta,rtype,times,r,sumr,x,int,
      &           sumint,lpopprod,ca2,cd2,cm2,ca22,cd22,cm22)
@@ -130,7 +130,7 @@ c
          do niter=1,nrun
             do j=1,nthin
                do k=1,3
-                  theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+                  theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
                end do
                call fixedmidprey(npts,theta,rtype,times,r,sumr,x,int,
      &              sumint,lpopprod,counta2,countd2,countm2,counta22,
@@ -152,7 +152,7 @@ c
       if (fixedpred.eq.4) then
          do niter=1,nburn
             do k=1,3
-               theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+               theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
             end do
             call rkmoves(npts,3,theta,rtype,times,r,sumr,x,int,
      &           sumint,lpopprod,ca3,cd3,cm3)
@@ -160,7 +160,7 @@ c
          do niter=1,nrun
             do j=1,nthin
                do k=1,3
-                  theta(k)=gengam(bth(k)+sumint(k),ath(k)+sumr(k))
+                  theta(k)=gengamm(bth(k)+sumint(k),ath(k)+sumr(k))
                end do
                call allfixed(npts,theta,rtype,times,r,sumr,x,int,
      &              sumint,lpopprod,counta,countd,countm)
@@ -1064,10 +1064,10 @@ c      end subroutine initconfig
       
       subroutine initialise(theta,npts,x,rtype,times,r,sumr,integral,
      &     lpopprod,sumint)
-      external pop_rate,ignpoi
+      external pop_rate,genpoi
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
-      integer x(2,0:nmax),r1,r2,r3,sumr(3),ignpoi,rtype(nmax,rmax),num,
+      integer x(2,0:nmax),r1,r2,r3,sumr(3),genpoi,rtype(nmax,rmax),num,
      &     i,j,k,nex,pop_rate,rtypes(rmax),ps(2,0:rmax),npts,r(3,nmax)
       double precision theta(3),times(nmax,rmax),incr,int(3),
      &     integral(3,nmax),lpopprod(nmax),rate,timess(rmax),sumint(3)
@@ -1080,7 +1080,7 @@ c      end subroutine initconfig
             rate=rate+theta(k)*(pop_rate(k,x(1,i-1),x(2,i-1))
      &           +pop_rate(k,x(1,i),x(2,i)))/2
          end do
-         nex=max0((ignpoi(rate)-num)/3,0)
+         nex=max0((genpoi(rate)-num)/3,0)
          incr=1d0/(num+3*nex+1)
          do j=1,num+3*nex
             times(i,j)=j*incr
@@ -1133,4 +1133,36 @@ c      end subroutine initconfig
          end do
       end do
       end subroutine initialise
+
+
+c     Extensive DJW edits below...
       
+      
+      integer function genpoi(a)
+      external ignpoi
+      double precision a
+      real ra
+      ra=a
+      genpoi=ignpoi(ra)
+      end function genpoi
+
+      double precision function gengamm(a,r)
+      double precision a,r
+      real ra,rr
+      ra=a
+      rr=r
+      gengamm=gengam(ra,rr)
+      end function gengamm
+
+      
+c      double precision function genunf(a,b)
+c      external g05caf
+c      double precision a,b,g05caf,dum
+c      genunf=a+(b-a)*g05caf(dum)
+c      end function genunf
+
+c      integer function ignuin(a,b)
+c      external g05dyf
+c      integer a,b,g05dyf
+c      ignuin=g05dyf(a,b)
+c      end function ignuin
