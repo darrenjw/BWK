@@ -1141,28 +1141,20 @@ c     Extensive DJW edits below...
       integer function genpoi(a)
       external ignpoi
       double precision a
-      real ra
-      ra=a
-      genpoi=ignpoi(ra)
+      genpoi=ignpoi(sngl(a))
       end function genpoi
 
       double precision function gengamm(a,r)
       external gengam
-      double precision a,r,ai
-      real ra,rr
-      rr=r
-      ra=a
-      gengamm=gengam(ra,rr)
+      double precision a,r
+      gengamm=gengam(sngl(a),sngl(r))
       end function gengamm
 
       
       double precision function genunfw(a,b)
       external genunf
       double precision a,b
-      real ra,rb
-      ra=a
-      rb=b
-      genunfw=genunf(a,b)
+      genunfw=genunf(sngl(a),sngl(b))
       end function genunfw
       
 c      double precision function genunfw(a,b)
