@@ -195,14 +195,14 @@ c
       
       subroutine rkmoves(i,k,theta,rtype,times,r,sumr,x,integral,
      &     sumint,lpopprod,ca3,cd3,cm3)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),r(3,nmax),i,x(2,0:nmax),sumr(3),k,
      &     ca3,cd3,cm3
-      double precision times(nmax,rmax),theta(3),genunf,u,
+      double precision times(nmax,rmax),theta(3),genunfw,u,
      &     lpopprod(nmax),integral(3,nmax),sumint(3)
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       if (u.lt.0.3d0) then
          call addsingle(i,k,theta,rtype,times,r,x,integral,lpopprod,
      &        sumr,sumint,ca3)
@@ -217,15 +217,15 @@ c
       
       subroutine fixedmidprey(npts,theta,rtype,times,r,sumr,x,integral,
      &     sumint,lpopprod,ca2,cd2,cm2,ca22,cd22,cm22)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),r(3,nmax),i,x(2,0:nmax),sumr(3),npts,
      &     ca2,cd2,cm2,ca22,cd22,cm22
-      double precision times(nmax,rmax),theta(3),genunf,u,
+      double precision times(nmax,rmax),theta(3),genunfw,u,
      &     lpopprod(nmax),integral(3,nmax),sumint(3)
       do i=2,npts
-         u=genunf(0d0,1d0)
+         u=genunfw(0d0,1d0)
          if (u.lt.0.3d0) then
             call add2move(i,theta,rtype,times,r,x,integral,lpopprod,
      &           sumr,sumint,ca2,ca22)
@@ -242,15 +242,15 @@ c
 
       subroutine allfixed(npts,theta,rtype,times,r,sumr,x,integral,
      &     sumint,lpopprod,counta,countd,countm)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),r(3,nmax),i,x(2,0:nmax),sumr(3),npts,
      &     counta,countd,countm
-      double precision times(nmax,rmax),theta(3),genunf,u,
+      double precision times(nmax,rmax),theta(3),genunfw,u,
      &     lpopprod(nmax),integral(3,nmax),sumint(3)
       do i=1,npts
-         u=genunf(0d0,1d0)
+         u=genunfw(0d0,1d0)
          if (u.lt.0.3d0) then
             call addmove(i,theta,rtype,times,r,sumr,x,integral,sumint,
      &           lpopprod,counta)
@@ -267,14 +267,14 @@ c
 
       subroutine add2move(i,theta,rtype,times,r,x,integral,
      &     lpopprod,sumr,sumint,count,count2)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),rtypes1(rmax),numi,i,j,k,numim1,count,
      &     count2,r(3,nmax),rtypes2(rmax),x(2,0:nmax),ps1(2,0:rmax),
      &     add1(3),add2(3),sumr(3),ps2(2,0:rmax)
       double precision times(nmax,rmax),timess1(rmax),theta(3),jtlr2,
-     &     sum2,genunf,jtlr1,lratio,u,lpopprod(nmax),int(3),intm(3),
+     &     sum2,genunfw,jtlr1,lratio,u,lpopprod(nmax),int(3),intm(3),
      &     integral(3,nmax),sum2m,timess2(rmax),newtime,sumint(3)
       logical feasible
 c     print *,'---------------------- In add2move'
@@ -292,7 +292,7 @@ c     insert reaction types
       do k=1,3
          add1(k)=0
          add2(k)=0
-         newtime=genunf(0d0,2d0)
+         newtime=genunfw(0d0,2d0)
          if (newtime.lt.1d0) then
             call insert_event(k,newtime,numim1,timess1,rtypes1)
             add1(k)=1
@@ -344,7 +344,7 @@ c
       do k=1,3
          lratio=lratio+dlog(theta(k))-dlog(r(k,i-1)+r(k,i)+1d0)
       end do
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       count2=count2+1
       if (dlog(u).lt.lratio) then
          count=count+1
@@ -373,14 +373,14 @@ c
       
       subroutine del2move(i,theta,rtype,times,r,x,integral,lpopprod,
      &     sumr,sumint,count,count2)
-      external genunf,ignuin
+      external genunfw,ignuin
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),rtypes1(rmax),numi,i,numim1,r(3,nmax),
      &     count,count2,j,rtypes2(rmax),x(2,0:nmax),ps1(2,0:rmax),
      &     ps2(2,0:rmax),ignuin,k,kill,add1(3),add2(3),sumr(3)
       double precision times(nmax,rmax),timess1(rmax),theta(3),
-     &     jtlr2,sum2,genunf,jtlr1,lratio,u,lpopprod(nmax),int(3),
+     &     jtlr2,sum2,genunfw,jtlr1,lratio,u,lpopprod(nmax),int(3),
      &     intm(3),integral(3,nmax),sum2m,timess2(rmax),sumint(3)
       logical feasible
 c     print *,'---------------------- In del2move'
@@ -452,7 +452,7 @@ c
       do k=1,3
          lratio=lratio-dlog(theta(k))+dlog(r(k,i-1)+r(k,i)+0d0)
       end do
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       count2=count2+1
       if (dlog(u).lt.lratio) then
          count=count+1
@@ -481,14 +481,14 @@ c
       
       subroutine shift2move(i,theta,rtype,times,r,x,integral,lpopprod,
      &     sumint,count,count2)
-      external genunf,ignuin
+      external genunfw,ignuin
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),rtypes1(rmax),numi,i,j,k,numim1,
      &     count,count2,rtypes2(rmax),x(2,0:nmax),ps1(2,0:rmax),
      &     ps2(2,0:rmax),movertype,ignuin,kill,add1(3),add2(3),r(3,nmax)
       double precision times(nmax,rmax),timess1(rmax),theta(3),jtlr2,
-     &     sum2,genunf,jtlr1,lratio,u,lpopprod(nmax),int(3),intm(3),
+     &     sum2,genunfw,jtlr1,lratio,u,lpopprod(nmax),int(3),intm(3),
      &     integral(3,nmax),sum2m,timess2(rmax),newtime,sumint(3)
       logical feasible
 c     print *,'---------------------- In shift2move'
@@ -521,7 +521,7 @@ c     delete and insert reaction type
          call delete_event(movertype,numi,timess2,rtypes2)
          add2(movertype)=add2(movertype)-1
       end if
-      newtime=genunf(0d0,2d0)
+      newtime=genunfw(0d0,2d0)
       if (newtime.lt.1d0) then
          call insert_event(movertype,newtime,numim1,timess1,rtypes1)
          add1(movertype)=add1(movertype)+1
@@ -569,7 +569,7 @@ c
       end do
 c
       lratio=jtlr1+jtlr2
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       count2=count2+1
       if (dlog(u).lt.lratio) then
          count=count+1
@@ -597,20 +597,20 @@ c
       
       subroutine shiftmove(i,theta,rtype,times,r,x,integral,sumint,
      &     lpopprod,count)
-      external genunf,ignuin
+      external genunfw,ignuin
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),rtypes(rmax),numi,i,j,k,r(3,nmax),
      &     x(2,0:nmax),ps(2,0:rmax),movertype,ignuin,count
       double precision times(nmax,rmax),timess(rmax),theta(3),newtime,
-     &     sum2,genunf,jtlr,lratio,u,lpopprod(nmax),int(3),sumint(3),
+     &     sum2,genunfw,jtlr,lratio,u,lpopprod(nmax),int(3),sumint(3),
      &     integral(3,nmax)
       logical feasible
 c      print *,'In shiftmove'
       numi=r(1,i)+r(2,i)+r(3,i)
       if (numi.eq.0) goto 1
       if (numi.eq.1) then
-         timess(1)=genunf(0d0,1d0)
+         timess(1)=genunfw(0d0,1d0)
          rtypes(1)=rtype(i,1)
       else 
          movertype=rtype(i,ignuin(1,numi))
@@ -620,7 +620,7 @@ c delete and insert reaction type
             rtypes(j)=rtype(i,j)
          end do
          call delete_event(movertype,numi,timess,rtypes)
-         newtime=genunf(0d0,1d0)
+         newtime=genunfw(0d0,1d0)
          call insert_event(movertype,newtime,numi,timess,rtypes)
       end if
 c calculate popn sizes
@@ -634,7 +634,7 @@ c
          jtlr=jtlr-theta(k)*(int(k)-integral(k,i))
       end do
       lratio=jtlr
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       if (dlog(u).lt.lratio) then
          count=count+1
          do j=1,numi
@@ -651,13 +651,13 @@ c
 
       subroutine delmove(i,theta,rtype,times,r,sumr,x,integral,sumint,
      &     lpopprod,count)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),rtypes(rmax),i,j,numi,k,r(3,nmax),
      &     x(2,0:nmax),ps(2,0:rmax),count,sumr(3)
       double precision times(nmax,rmax),timess(rmax),theta(3),sum2,jtlr,
-     &     genunf,lratio,u,lpopprod(nmax),int(3),integral(3,nmax),
+     &     genunfw,lratio,u,lpopprod(nmax),int(3),integral(3,nmax),
      &     sumint(3)
       logical feasible
 c      print *,'In delmove'
@@ -687,7 +687,7 @@ c
          lratio=lratio+dlog(r(k,i)+0d0)
       end do
 c
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       if (dlog(u).lt.lratio) then
          count=count+1
          do j=1,numi
@@ -706,13 +706,13 @@ c
       
       subroutine addmove(i,theta,rtype,times,r,sumr,x,integral,sumint,
      &     lpopprod,count)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),r(3,nmax),rtypes(rmax),i,j,k,numi,
      &     x(2,0:nmax),ps(2,0:rmax),count,sumr(3)
       double precision times(nmax,rmax),timess(rmax),theta(3),
-     &     newtime,sum2,genunf,jtlr,lratio,u,lpopprod(nmax),int(3),
+     &     newtime,sum2,genunfw,jtlr,lratio,u,lpopprod(nmax),int(3),
      &     integral(3,nmax),sumint(3)
       logical feasible
 c      print *,'In addmove'
@@ -723,7 +723,7 @@ c      print *,'In addmove'
       end do
 c insert reaction types
       do k=1,3
-         newtime=genunf(0d0,1d0)
+         newtime=genunfw(0d0,1d0)
          call insert_event(k,newtime,numi,timess,rtypes)
       end do
 c calculate popn sizes
@@ -742,7 +742,7 @@ c
          lratio=lratio-dlog(r(k,i)+1d0)
       end do
 c 
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       if (dlog(u).lt.lratio) then
          count=count+1
          do j=1,numi
@@ -761,13 +761,13 @@ c
       
       subroutine addsingle(i,k,theta,rtype,times,r,x,integral,lpopprod,
      &     sumr,sumint,count)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),r(3,nmax),rtypes(rmax),i,j,k,numi,
      &     x(2,0:nmax),ps(2,0:rmax),count,sumr(3),kk
       double precision times(nmax,rmax),timess(rmax),theta(3),
-     &     newtime,sum2,genunf,jtlr,lratio,u,lpopprod(nmax),int(3),
+     &     newtime,sum2,genunfw,jtlr,lratio,u,lpopprod(nmax),int(3),
      &     integral(3,nmax),sumint(3)
       logical feasible
 c      print *,'In add3move'
@@ -777,7 +777,7 @@ c      print *,'In add3move'
          rtypes(j)=rtype(i,j)
       end do
 c insert reaction type k
-      newtime=genunf(0d0,1d0)
+      newtime=genunfw(0d0,1d0)
       call insert_event(k,newtime,numi,timess,rtypes)
 c calculate popn sizes
       ps(1,0)=x(1,i-1)
@@ -792,7 +792,7 @@ c
 c
       lratio=jtlr+dlog(theta(k))-dlog(r(k,i)+1d0)
 c 
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       if (dlog(u).lt.lratio) then
          count=count+1
          do j=1,numi
@@ -812,13 +812,13 @@ c
       
       subroutine delsingle(i,k,theta,rtype,times,r,x,integral,lpopprod,
      &     sumr,sumint,count)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),rtypes(rmax),i,j,numi,k,r(3,nmax),
      &     x(2,0:nmax),ps(2,0:rmax),count,sumr(3),kk
       double precision times(nmax,rmax),timess(rmax),theta(3),sum2,jtlr,
-     &     genunf,lratio,u,lpopprod(nmax),int(3),integral(3,nmax),
+     &     genunfw,lratio,u,lpopprod(nmax),int(3),integral(3,nmax),
      &     sumint(3)
       logical feasible
 c      print *,'In del3move'
@@ -843,7 +843,7 @@ c
 c
       lratio=jtlr-dlog(theta(k))+dlog(r(k,i)+0d0)
 c
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       if (dlog(u).lt.lratio) then
          count=count+1
          do j=1,numi
@@ -863,13 +863,13 @@ c
       
       subroutine shiftsingle(i,k,theta,rtype,times,r,x,integral,
      &     lpopprod,sumint,count)
-      external genunf
+      external genunfw
       integer rmax,nmax
       parameter (rmax=10000, nmax=251)
       integer rtype(nmax,rmax),rtypes(rmax),numi,i,j,k,r(3,nmax),
      &     x(2,0:nmax),ps(2,0:rmax),count,kk
       double precision times(nmax,rmax),timess(rmax),theta(3),newtime,
-     &     sum2,genunf,jtlr,lratio,u,lpopprod(nmax),int(3),sumint(3),
+     &     sum2,genunfw,jtlr,lratio,u,lpopprod(nmax),int(3),sumint(3),
      &     integral(3,nmax)
       logical feasible
 c      print *,'In shift3move'
@@ -881,7 +881,7 @@ c delete and insert reaction type k
          rtypes(j)=rtype(i,j)
       end do
       call delete_event(k,numi,timess,rtypes)
-      newtime=genunf(0d0,1d0)
+      newtime=genunfw(0d0,1d0)
       call insert_event(k,newtime,numi,timess,rtypes)
 c calculate popn sizes
       ps(1,0)=x(1,i-1)
@@ -894,7 +894,7 @@ c
          jtlr=jtlr-theta(kk)*(int(kk)-integral(kk,i))
       end do
       lratio=jtlr
-      u=genunf(0d0,1d0)
+      u=genunfw(0d0,1d0)
       if (dlog(u).lt.lratio) then
          count=count+1
          do j=1,numi
@@ -1147,20 +1147,29 @@ c     Extensive DJW edits below...
       end function genpoi
 
       double precision function gengamm(a,r)
-      double precision a,r,s
-      real ra,rs
+      external gengam
+      double precision a,r,ai
+      real ra,rr
+      rr=r
       ra=a
-      s=1d0/r
-      rs=s
-      gengamm=gengam(ra,rs)
+      gengamm=gengam(ra,rr)
       end function gengamm
 
       
-c      double precision function genunf(a,b)
+      double precision function genunfw(a,b)
+      external genunf
+      double precision a,b
+      real ra,rb
+      ra=a
+      rb=b
+      genunfw=genunf(a,b)
+      end function genunfw
+      
+c      double precision function genunfw(a,b)
 c      external g05caf
 c      double precision a,b,g05caf,dum
-c      genunf=a+(b-a)*g05caf(dum)
-c      end function genunf
+c      genunfw=a+(b-a)*g05caf(dum)
+c      end function genunfw
 
 c      integer function ignuin(a,b)
 c      external g05dyf
