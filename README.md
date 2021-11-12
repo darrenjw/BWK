@@ -10,7 +10,9 @@ Initially just Wilkinson's C code for block updating MCMC algorithm.
 
 Building this requires the [GSL](https://www.gnu.org/software/gsl/). On Debian-derived Linux distributions, this should just require the packages `gsl-bin` and `libgsl-dev`. There will be similar packages on other Linux and Unix-like systems. Then, just typing `make` in the relevant directory should build and run the code. See the `Makefile` for further details.
 
-I have now found one of Boys' Fortran 77 codes for RJ-MCMC in the partially observed case. It is in the directory `partial-rj`. I've managed to tweak it to get it to build and run. Still need to check that it is working correctly.
+I have now found one of Boys' Fortran 77 codes for RJ-MCMC in the partially observed case. It is in the directory `partial-rj`. I've managed to tweak it to get it to build and run. Seems to be running correctly. It should be easy to build and run on any Linux-like system with `f77` installed. Type `make`.
+
+
 
 
 
