@@ -1147,11 +1147,12 @@ c     Extensive DJW edits below...
       end function genpoi
 
       double precision function gengamm(a,r)
-      double precision a,r
-      real ra,rr
+      double precision a,r,s
+      real ra,rs
       ra=a
-      rr=r
-      gengamm=gengam(ra,rr)
+      s=1d0/r
+      rs=s
+      gengamm=gengam(ra,rs)
       end function gengamm
 
       
