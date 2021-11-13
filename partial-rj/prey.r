@@ -63,8 +63,8 @@ mah<-function(rjb,djw)
 }
 
 
-compare(rjb,rjblist,djw,djwlist)
-mah(rjb,djw)
+#compare(rjb,rjblist,djw,djwlist)
+#mah(rjb,djw)
 
 # 40 intervals, Table 1
 rjb<-read.table("rjb40-e.tab",header=TRUE,check.names=FALSE)
