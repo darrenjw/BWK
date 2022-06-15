@@ -18,8 +18,12 @@ lv-big.tab: lotka_volterra
 lotka_volterra: lotka_volterra.o interval.o
 	gcc $(CFLAGS) -o lotka_volterra interval.o lotka_volterra.o $(LDFLAGS)
 
+%.out: %.tab
+	./summarise.R $< > $@ 2>&1
+	cp Rplots.pdf $@.pdf
+
 clean:
-	rm -f *.tab *.sim *.ind *.o *.out *~ *.bak core interval_test lotka_volterra
+	rm -f *.tab *.sim *.ind *.o *.out *~ *.bak *.pdf core interval_test lotka_volterra
 
 print:
 	a2ps interval.h interval.c interval_test.c Makefile

@@ -18,6 +18,9 @@ lv.tab: lotka_volterra
 lv-big.tab: lotka_volterra
 	nice ./lotka_volterra 1000000 $(OBS) | mcmc.py -t 20 > lv-big.tab
 
+lv-very-big.tab: lotka_volterra
+	nice ./lotka_volterra 10000000 $(OBS) | mcmc.py -t 200 > lv-very-big.tab
+
 test.tab: test-mcmc
 	nice ./test-mcmc 1000000 | mcmc.py -t 20 > test.tab
 
@@ -36,8 +39,13 @@ lotka_volterra: lotka_volterra.o interval.o
 lotka_volterra-v4: lotka_volterra-v4.o interval.o
 	gcc $(CFLAGS) -o lotka_volterra-v4 interval.o lotka_volterra-v4.o $(LDFLAGS)
 
+%.out: %.tab
+	./summarise.R $< > $@ 2>&1
+	cp Rplots.pdf $@.pdf
+
+
 clean:
-	rm -f *.tab *.sim *.ind *.o *.out *~ *.bak core test-code test-mcmc lotka_volterra
+	rm -f *.tab *.sim *.ind *.o *.out *~ *.pdf *.bak core test-code test-mcmc lotka_volterra
 
 print:
 	a2ps interval.h interval.c interval_test.c Makefile
