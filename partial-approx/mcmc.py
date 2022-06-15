@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # mcmc.py
 
 # (C) 2005 Darren Wilkinson
