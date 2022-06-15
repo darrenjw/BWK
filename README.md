@@ -10,7 +10,7 @@ Wilkinson's C code for the exact block updating MCMC algorithm is in the directo
 
 Wilkinson's approximate code can be found in the directories `approx` and `partial-approx`. Again, see the `Readmes` and `Makefiles` for further details.
 
-I have now found Boys' main Fortran 77 code for a RJ-MCMC approach. It is in the directory `partial-rj`. I've managed to tweak it to get it to build and run. Seems to be running correctly. It should be easy to build and run on any Linux-like system with `f77` installed. Type `make`. Again, see the `Readme` in that directory for further details.
+I have now found Boys' main Fortran 77 code for a RJ-MCMC approach. It is in the directory `partial-rj`. I've managed to tweak it to get it to build and run. Seems to be running correctly. It should be easy to build and run on any Linux-like system with `gfortran` installed. Type `make`. Again, see the `Readme` in that directory for further details.
 
 
 
