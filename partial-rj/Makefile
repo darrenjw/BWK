@@ -52,7 +52,7 @@ rjb40-e-3.tab: a.out in9
 
 a.out: prey.f
 	cd ../randlib.f/src ; make
-	f77 -O2 prey.f ../randlib.f/src/randlib.a
+	gfortran -O2 prey.f ../randlib.f/src/randlib.a
 
 %.txt: %.tab
 	./summarise.R $< > $@ 2>&1

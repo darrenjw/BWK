@@ -2,7 +2,7 @@
 
 
 randlib.a:
-	f77 -O2 -c *.f
+	gfortran -O2 -c *.f
 	ar r randlib.a *.o
 
 clean:
