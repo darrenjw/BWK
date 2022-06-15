@@ -9,11 +9,11 @@ OBS=50
 
 lv.tab: lotka_volterra
 	date
-	nice ./lotka_volterra 50000 $(OBS)| mcmc.py -t 2 > lv.tab
+	nice ./lotka_volterra 50000 $(OBS)| ./mcmc.py -t 2 > lv.tab
 	date
 
 lv-big.tab: lotka_volterra
-	nice ./lotka_volterra 500000 $(OBS) | mcmc.py -t 20 > lv-big.tab
+	nice ./lotka_volterra 500000 $(OBS) | ./mcmc.py -t 20 > lv-big.tab
 
 lotka_volterra: lotka_volterra.o interval.o
 	gcc $(CFLAGS) -o lotka_volterra interval.o lotka_volterra.o $(LDFLAGS)

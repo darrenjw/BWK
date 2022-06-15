@@ -13,16 +13,16 @@ OBS=50
 #OBS=5
 
 lv.tab: lotka_volterra
-	nice ./lotka_volterra 100000 $(OBS) | mcmc.py -t 2 > lv.tab
+	nice ./lotka_volterra 100000 $(OBS) | ./mcmc.py -t 2 > lv.tab
 
 lv-big.tab: lotka_volterra
-	nice ./lotka_volterra 1000000 $(OBS) | mcmc.py -t 20 > lv-big.tab
+	nice ./lotka_volterra 1000000 $(OBS) | ./mcmc.py -t 20 > lv-big.tab
 
 lv-very-big.tab: lotka_volterra
-	nice ./lotka_volterra 10000000 $(OBS) | mcmc.py -t 200 > lv-very-big.tab
+	nice ./lotka_volterra 10000000 $(OBS) | ./mcmc.py -t 200 > lv-very-big.tab
 
 test.tab: test-mcmc
-	nice ./test-mcmc 1000000 | mcmc.py -t 20 > test.tab
+	nice ./test-mcmc 1000000 | ./mcmc.py -t 20 > test.tab
 
 test: test-code
 	nice ./test-code

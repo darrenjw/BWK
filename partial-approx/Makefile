@@ -10,10 +10,10 @@ LDFLAGS=-lgsl -lgslcblas -lm
 OBS=50
 
 lv.tab: lotka_volterra
-	nice ./lotka_volterra 100000 $(OBS) | mcmc.py -t 5 > lv.tab
+	nice ./lotka_volterra 100000 $(OBS) | ./mcmc.py -t 5 > lv.tab
 
 lv-big.tab: lotka_volterra
-	nice ./lotka_volterra 10000000 $(OBS) | mcmc.py -t 500 > lv-big.tab
+	nice ./lotka_volterra 10000000 $(OBS) | ./mcmc.py -t 500 > lv-big.tab
 
 lotka_volterra: lotka_volterra.o
 	gcc $(CFLAGS) -o lotka_volterra lotka_volterra.o $(LDFLAGS)
