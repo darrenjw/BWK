@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+  <model name="Lotka-Voltera system">
+
+    <listOfCompartments>
+      <compartment name="Cell" volume="1"/>
+    </listOfCompartments>
+
+    <listOfSpecies>
+      <specie name="Y(1)"  initialAmount="50"    compartment="Cell"/>
+      <specie name="Y(2)"  initialAmount="100"   compartment="Cell"/>
+    </listOfSpecies>
+
+    <listOfParameters>
+      <parameter name="a" value="0.1"/>
+      <parameter name="b" value="0.0005"/>
+      <parameter name="c" value="0.06"/>
+    </listOfParameters>
+
+    <listOfReactions>
+
+      <reaction name="Prey reproduction" reversible="false">
+        <listOfReactants>
+          <specieReference specie="Y(1)"  stoichiometry="1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <specieReference specie="Y(1)" stoichiometry="2"/>
+        </listOfProducts>
+        <kineticLaw formula="a*Y(1)"/>
+      </reaction>
+
+      <reaction name="Predator reproduction" reversible="false">
+        <listOfReactants>
+          <specieReference specie="Y(1)" stoichiometry="1"/>       
+          <specieReference specie="Y(2)" stoichiometry="1"/>       
+        </listOfReactants>
+        <listOfProducts>
+          <specieReference specie="Y(2)"  stoichiometry="2"/>
+        </listOfProducts>
+        <kineticLaw formula="b*Y(1)*Y(2)"/>
+      </reaction>
+
+      <reaction name="Predator decay" reversible="false">
+        <listOfReactants>
+          <specieReference specie="Y(2)" stoichiometry="1"/>       
+        </listOfReactants>
+        <listOfProducts>
+
+        </listOfProducts>
+        <kineticLaw formula="c*Y(2)"/>
+      </reaction>
+
+    </listOfReactions>
+
+  </model>
+
+
+
