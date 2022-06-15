@@ -2,7 +2,20 @@
 
 
 FORCE:
-	make toy.tab
+	make toy.txt
+
+
+ALL:
+	make toy.txt
+	make rjb40-e.txt
+	make rjb200-e.txt
+	make rjb200-fine-e.txt
+	make rjb40-epif.txt
+	make rjb40-epif-2.txt
+	make rjb40-epi.txt
+	make rjb40-epi-2.txt
+	make rjb40-e-2.txt
+	make rjb40-e-3.txt
 
 
 toy.tab: a.out in0
@@ -40,6 +53,10 @@ rjb40-e-3.tab: a.out in9
 a.out: prey.f
 	cd ../randlib.f/src ; make
 	f77 -O2 prey.f ../randlib.f/src/randlib.a
+
+%.txt: %.tab
+	./summarise.R $< > $@ 2>&1
+	cp Rplots.pdf $@.pdf
 
 
 clean:
